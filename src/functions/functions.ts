@@ -76,6 +76,10 @@ export function logMessage(message: string): string {
  */
 export function streaming(message: string, invocation?: CustomFunctions.StreamingInvocation<string[][]>): void {
   console.log(message);
-
-  callExcel(invocation);
+  try {
+    callExcel(invocation);
+  } catch (e) {
+    console.error(e);
+  }
+  
 }

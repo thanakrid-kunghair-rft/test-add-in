@@ -13,6 +13,7 @@ Office.initialize = () => {
   document.getElementById("sideload-msg").style.display = "none";
   document.getElementById("app-body").style.display = "flex";
   document.getElementById("run").onclick = run;
+  document.getElementById("refresh-button").onclick = refreshButton;
 };
 
 async function run() {
@@ -31,6 +32,18 @@ async function run() {
 
       await context.sync();
       console.log(`The range address was ${range.address}.`);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function refreshButton() {
+  try {
+    await Excel.run(async context => {
+      const range = context.workbook.getSelectedRange();
+      range.calculate();
+      await context.sync();
     });
   } catch (error) {
     console.error(error);

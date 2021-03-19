@@ -9,7 +9,7 @@
   "config": {
     "app-to-debug": "excel",
     "app-type-to-debug": "desktop",
-    "dev-server-port": 3000,
+    "dev-server-port": 3100,
     "source-bundle-url-path": "index.win32"
   },
   "scripts": {
@@ -45,7 +45,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.5.0",
     "office-addin-cli": "^1.0.13",
-    "office-addin-debugging": "^3.0.34",
+    "office-addin-debugging": "^3.0.42",
     "office-addin-dev-certs": "^1.5.5",
     "office-addin-lint": "^1.0.26",
     "office-addin-manifest": "1.5.7",
@@ -53,9 +53,9 @@
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.2.2",
     "typescript": "^4.0.3",
-    "webpack": "^4.43.0",
+    "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.2"
   },
   "prettier": "office-addin-prettier-config"
 }
