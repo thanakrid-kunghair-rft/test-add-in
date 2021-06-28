@@ -14,6 +14,7 @@ Office.initialize = () => {
   document.getElementById("app-body").style.display = "flex";
   document.getElementById("run").onclick = run;
   document.getElementById("refresh-button").onclick = refreshButton;
+  setOnSelectionChangedHandler();
 };
 
 async function run() {
@@ -49,3 +50,39 @@ async function refreshButton() {
     console.error(error);
   }
 }
+
+async function setOnSelectionChangedHandler() {
+  try {
+    await Excel.run(async context => {
+      context.workbook.onSelectionChanged.add(onSelectionChangedHandler);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function onSelectionChangedHandler(args: Excel.SelectionChangedEventArgs) {
+  await Excel.run(async (): Promise<void> => {
+    const range = args.workbook.getSelectedRange();
+    let directPrecedentValues: string[][][] = [];
+    try {
+      let spillParentRange = range.getSpillParentOrNullObject();
+      range.load({ address: true, formulas: true });
+      spillParentRange.load({ address: true, formulas: true });
+      
+      const precedentsRangeAreas: Excel.WorkbookRangeAreas = range.getDirectPrecedents();
+      precedentsRangeAreas.ranges.load('values');
+      await args.workbook.context.sync();
+      if (precedentsRangeAreas.ranges) {
+        directPrecedentValues = precedentsRangeAreas.ranges.items.map((item: Excel.Range) => item.values);
+      }
+      console.log('DirecPrecedent Values')
+      console.log(directPrecedentValues)
+    } catch(e) {
+      console.error(e)
+    }
+    
+  });
+}
+
+

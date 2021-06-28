@@ -83,3 +83,32 @@ export function streaming(message: string, invocation?: CustomFunctions.Streamin
   }
   
 }
+
+/**
+ * Writes a message to console.log().
+ * @customfunction STREAMING2
+ * @param {string[][]} valueOne String to write.
+ * @param {string[][]} valueTwo String to write.
+ * @param {CustomFunctions.StreamingInvocation<string[][]>} invocation Uses the invocation parameter present in each cell.
+ */
+ export function streaming2(valueOne: string[][], valueTwo: string[][],invocation?: CustomFunctions.StreamingInvocation<string[][]>): void {
+  try {
+    const valueOneString = flatten2DArrayToString(valueOne);
+    const valueTwoString = flatten2DArrayToString(valueTwo);
+   
+    invocation.setResult([[valueOneString, valueTwoString]]);
+  } catch (e) {
+    console.error(e);
+  }
+  
+}
+
+function flatten2DArrayToString(valueList: string[][]): string {
+  let stringValue = '';
+  valueList.forEach((values: string[]) => {
+    values.forEach((value: string) => {
+      stringValue = `${stringValue},${value}`
+    });
+  });
+  return stringValue;
+}
