@@ -6,9 +6,6 @@
  * @returns The sum of the two numbers.
  */
 /* global clearInterval, console, setInterval */
-
-import { callExcel } from "./excel-services";
-
 export function add(first: number, second: number): number {
   return first + second;
 }
@@ -47,6 +44,7 @@ export function increment(incrementBy: number, invocation: CustomFunctions.Strea
   let result = 0;
   const timer = setInterval(() => {
     result += incrementBy;
+    console.log(result)
     invocation.setResult(result);
   }, 1000);
 
@@ -75,12 +73,19 @@ export function logMessage(message: string): string {
  * @param {CustomFunctions.StreamingInvocation<string[][]>} invocation Uses the invocation parameter present in each cell.
  */
 export function streaming(message: string, invocation?: CustomFunctions.StreamingInvocation<string[][]>): void {
-  console.log(message);
+  invocation.setResult([['Retrieving...']]);
   try {
-    callExcel(invocation);
+    const timeout = setTimeout(() => {
+      console.log('render');
+    invocation.setResult([["A", "B"],["C", "D"]] as string[][]);
+    }, 30000)
+    invocation.onCanceled = () => {
+      clearTimeout(timeout);
+    };
   } catch (e) {
     console.error(e);
   }
+  
   
 }
 
