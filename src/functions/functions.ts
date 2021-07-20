@@ -130,7 +130,7 @@ function flatten2DArrayToString(valueList: string[][]): string {
  * @param {string[][]} [destinationCell] Defines the position of the top-left corner of the table where the data appears.
  * @param {CustomFunctions.StreamingInvocation<string[][]>} invocation Uses the invocation parameter present in each cell.
  */
- export function MOCKRDP(instruments: string[][], fields: string[][], parameters: string[][], destinationCell: string[][],invocation?: CustomFunctions.StreamingInvocation<string[][]>): void {
+ export function mockRDP(instruments: string[][], fields: string[][], parameters: string[][], destinationCell: string[][],invocation?: CustomFunctions.StreamingInvocation<string[][]>): void {
   invocation.setResult([['Retrieve at ..:..:..']]);
   try {
     // for this to work I will have to use formula like this =CONTOSO.MOCKRDP("A","B","C","A1") 
