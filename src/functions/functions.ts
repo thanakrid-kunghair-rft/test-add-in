@@ -5,6 +5,9 @@
  * @param second Second number
  * @returns The sum of the two numbers.
  */
+
+import { writeDataToCell } from "./excel-services";
+
 /* global clearInterval, console, setInterval */
 export function add(first: number, second: number): number {
   return first + second;
@@ -106,8 +109,8 @@ export function streaming(message: string, invocation?: CustomFunctions.Streamin
     console.error(e);
   }
   
-}
 
+}
 function flatten2DArrayToString(valueList: string[][]): string {
   let stringValue = '';
   valueList.forEach((values: string[]) => {
@@ -117,3 +120,25 @@ function flatten2DArrayToString(valueList: string[][]): string {
   });
   return stringValue;
 }
+
+/**
+ * Writes a message to console.log().
+ * @customfunction MOCKRDP
+ * @param {string[][]} instruments An array of text.
+ * @param {string[][]} fields An array of text.
+ * @param {string[][]} [parameters] An array of text.
+ * @param {string[][]} [destinationCell] Defines the position of the top-left corner of the table where the data appears.
+ * @param {CustomFunctions.StreamingInvocation<string[][]>} invocation Uses the invocation parameter present in each cell.
+ */
+ export function MOCKRDP(instruments: string[][], fields: string[][], parameters: string[][], destinationCell: string[][],invocation?: CustomFunctions.StreamingInvocation<string[][]>): void {
+  invocation.setResult([['Retrieve at ..:..:..']]);
+  try {
+    // for this to work I will have to use formula like this =CONTOSO.MOCKRDP("A","B","C","A1") 
+    // notice that A1 is in a string format, but the correct format has to be =CONTOSO.MOCKRDP("A","B","C",A1)
+    // when destinationCell is in cell reference mode, custom functions will receive the cell's values, in this case an emptry string [['']] if referene to an empty cell.
+    writeDataToCell(destinationCell[0][0]);
+  } catch (e) {
+    console.error(e);
+  }
+}
+

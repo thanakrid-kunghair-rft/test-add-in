@@ -13,3 +13,13 @@ export const callExcel = async (invocation: CustomFunctions.StreamingInvocation<
     })
     
 }
+
+export const writeDataToCell = async (cellAddress: string) => {
+    Excel.run(async (context: Excel.RequestContext) => {
+        const range = context.workbook.worksheets.getActiveWorksheet().getRange(cellAddress);
+        range.load({values: true});
+        await context.sync();
+        range.values = [['data1', 'data2'], ['data3', 'data4']];
+        await context.sync();
+    });
+}
